@@ -24,12 +24,12 @@ class Playlist
     private \DateTimeInterface $updatedAt;
 
     #[ORM\ManyToOne(inversedBy: 'playlist')]
-    #[ORM\JoinColumn(nullable: false)]
-    private PlaylistMedia $playlistMedia;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?PlaylistMedia $playlistMedia = null;
 
     #[ORM\ManyToOne(inversedBy: 'playlist')]
-    #[ORM\JoinColumn(nullable: false)]
-    private PlaylistSubscription $playlistSubscription;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?PlaylistSubscription $playlistSubscription = null;
 
     public function getId(): int
     {
@@ -72,24 +72,24 @@ class Playlist
         return $this;
     }
 
-    public function getPlaylistMedia(): PlaylistMedia
+    public function getPlaylistMedia(): ?PlaylistMedia
     {
         return $this->playlistMedia;
     }
 
-    public function setPlaylistMedia(PlaylistMedia $playlistMedia): static
+    public function setPlaylistMedia(?PlaylistMedia $playlistMedia): static
     {
         $this->playlistMedia = $playlistMedia;
 
         return $this;
     }
 
-    public function getPlaylistSubscription(): PlaylistSubscription
+    public function getPlaylistSubscription(): ?PlaylistSubscription
     {
         return $this->playlistSubscription;
     }
 
-    public function setPlaylistSubscription(PlaylistSubscription $playlistSubscription): static
+    public function setPlaylistSubscription(?PlaylistSubscription $playlistSubscription): static
     {
         $this->playlistSubscription = $playlistSubscription;
 

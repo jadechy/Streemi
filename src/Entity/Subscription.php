@@ -96,7 +96,7 @@ class Subscription
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->setCurrentSubscriptionId($this);
+            $user->setCurrentSubscription($this);
         }
 
         return $this;
@@ -106,8 +106,8 @@ class Subscription
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($user->getCurrentSubscriptionId() === $this) {
-                $user->setCurrentSubscriptionId(null);
+            if ($user->getCurrentSubscription() === $this) {
+                $user->setCurrentSubscription(null);
             }
         }
 
@@ -126,7 +126,7 @@ class Subscription
     {
         if (!$this->subscriptionHistories->contains($subscriptionHistory)) {
             $this->subscriptionHistories->add($subscriptionHistory);
-            $subscriptionHistory->setSubscriptionId($this);
+            $subscriptionHistory->setSubscription($this);
         }
 
         return $this;
@@ -136,8 +136,8 @@ class Subscription
     {
         if ($this->subscriptionHistories->removeElement($subscriptionHistory)) {
             // set the owning side to null (unless already changed)
-            if ($subscriptionHistory->getSubscriptionId() === $this) {
-                $subscriptionHistory->setSubscriptionId(null);
+            if ($subscriptionHistory->getSubscription() === $this) {
+                $subscriptionHistory->setSubscription(null);
             }
         }
 

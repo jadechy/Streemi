@@ -35,7 +35,7 @@ class Serie extends Media
     {
         if (!$this->seasons->contains($season)) {
             $this->seasons->add($season);
-            $season->setSerieId($this);
+            $season->setSerie($this);
         }
 
         return $this;
@@ -45,8 +45,8 @@ class Serie extends Media
     {
         if ($this->seasons->removeElement($season)) {
             // set the owning side to null (unless already changed)
-            if ($season->getSerieId() === $this) {
-                $season->setSerieId(null);
+            if ($season->getSerie() === $this) {
+                $season->setSerie(null);
             }
         }
 

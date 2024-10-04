@@ -22,9 +22,9 @@ class Language
     private string $code;
 
     /**
-     * @var Collection<int, media>
+     * @var Collection<int, Media>
      */
-    #[ORM\ManyToMany(targetEntity: media::class, inversedBy: 'languages')]
+    #[ORM\ManyToMany(targetEntity: Media::class, inversedBy: 'languages')]
     private Collection $media;
 
     public function __construct()
@@ -62,25 +62,25 @@ class Language
     }
 
     /**
-     * @return Collection<int, media>
+     * @return Collection<int, Media>
      */
     public function getMedia(): Collection
     {
         return $this->media;
     }
 
-    public function addMedium(media $medium): static
+    public function addMedia(Media $media): static
     {
-        if (!$this->media->contains($medium)) {
-            $this->media->add($medium);
+        if (!$this->media->contains($media)) {
+            $this->media->add($media);
         }
 
         return $this;
     }
 
-    public function removeMedium(media $medium): static
+    public function removeMedia(Media $media): static
     {
-        $this->media->removeElement($medium);
+        $this->media->removeElement($media);
 
         return $this;
     }

@@ -26,8 +26,8 @@ class User
     private string $password;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
-    private Subscription $currentSubscription;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Subscription $currentSubscription = null;
 
     /**
      * @var Collection<int, SubscriptionHistory>
@@ -45,12 +45,12 @@ class User
     private Collection $comments;
 
     #[ORM\ManyToOne(inversedBy: 'author')]
-    #[ORM\JoinColumn(nullable: false)]
-    private WatchHistory $watchHistory;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?WatchHistory $watchHistory = null;
 
     #[ORM\ManyToOne(inversedBy: 'author')]
-    #[ORM\JoinColumn(nullable: false)]
-    private PlaylistSubscription $playlistSubscription;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?PlaylistSubscription $playlistSubscription = null;
 
     public function __construct()
     {
@@ -99,12 +99,12 @@ class User
         return $this;
     }
 
-    public function getCurrentSubscription(): Subscription
+    public function getCurrentSubscription(): ?Subscription
     {
         return $this->currentSubscription;
     }
 
-    public function setCurrentSubscription(Subscription $currentSubscription): static
+    public function setCurrentSubscription(?Subscription $currentSubscription): static
     {
         $this->currentSubscription = $currentSubscription;
 
@@ -123,7 +123,7 @@ class User
     {
         if (!$this->subscriptionHistories->contains($subscriptionHistory)) {
             $this->subscriptionHistories->add($subscriptionHistory);
-            $subscriptionHistory->setUserId($this);
+            $subscriptionHistory->setAuthor($this);
         }
 
         return $this;
@@ -133,8 +133,8 @@ class User
     {
         if ($this->subscriptionHistories->removeElement($subscriptionHistory)) {
             // set the owning side to null (unless already changed)
-            if ($subscriptionHistory->getUserId() === $this) {
-                $subscriptionHistory->setUserId(null);
+            if ($subscriptionHistory->getAuthor() === $this) {
+                $subscriptionHistory->setAuthor(null);
             }
         }
 
@@ -183,24 +183,24 @@ class User
         return $this;
     }
 
-    public function getWatchHistory(): WatchHistory
+    public function getWatchHistory(): ?WatchHistory
     {
         return $this->watchHistory;
     }
 
-    public function setWatchHistory(WatchHistory $watchHistory): static
+    public function setWatchHistory(?WatchHistory $watchHistory): static
     {
         $this->watchHistory = $watchHistory;
 
         return $this;
     }
 
-    public function getPlaylistSubscription(): PlaylistSubscription
+    public function getPlaylistSubscription(): ?PlaylistSubscription
     {
         return $this->playlistSubscription;
     }
 
-    public function setPlaylistSubscription(PlaylistSubscription $playlistSubscription): static
+    public function setPlaylistSubscription(?PlaylistSubscription $playlistSubscription): static
     {
         $this->playlistSubscription = $playlistSubscription;
 

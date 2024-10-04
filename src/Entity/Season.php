@@ -25,8 +25,8 @@ class Season
     private Collection $episodes;
 
     #[ORM\ManyToOne(inversedBy: 'seasons')]
-    #[ORM\JoinColumn(nullable: false)]
-    private Serie $serie;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Serie $serie = null;
 
     public function __construct()
     {
@@ -62,7 +62,7 @@ class Season
     {
         if (!$this->episodes->contains($episode)) {
             $this->episodes->add($episode);
-            $episode->setSeasonId($this);
+            $episode->setSeason($this);
         }
 
         return $this;
@@ -72,20 +72,20 @@ class Season
     {
         if ($this->episodes->removeElement($episode)) {
             // set the owning side to null (unless already changed)
-            if ($episode->getSeasonId() === $this) {
-                $episode->setSeasonId(null);
+            if ($episode->getSeason() === $this) {
+                $episode->setSeason(null);
             }
         }
 
         return $this;
     }
 
-    public function getSerie(): Serie
+    public function getSerie(): ?Serie
     {
         return $this->serie;
     }
 
-    public function setSerie(Serie $serie): static
+    public function setSerie(?Serie $serie): static
     {
         $this->serie = $serie;
 

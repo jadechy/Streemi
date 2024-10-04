@@ -21,12 +21,12 @@ class SubscriptionHistory
     private \DateTimeInterface $endDate;
 
     #[ORM\ManyToOne(inversedBy: 'subscriptionHistories')]
-    #[ORM\JoinColumn(nullable: false)]
-    private User $author;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $author = null;
 
     #[ORM\ManyToOne(inversedBy: 'subscriptionHistories')]
-    #[ORM\JoinColumn(nullable: false)]
-    private Subscription $subscription;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Subscription $subscription = null;
 
     public function getId(): int
     {
@@ -57,24 +57,24 @@ class SubscriptionHistory
         return $this;
     }
 
-    public function getAuthor(): User
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(User $author): static
+    public function setAuthor(?User $author): static
     {
         $this->author = $author;
 
         return $this;
     }
 
-    public function getSubscriptionId(): Subscription
+    public function getSubscription(): ?Subscription
     {
         return $this->subscription;
     }
 
-    public function setSubscriptionId(Subscription $subscription): static
+    public function setSubscription(?Subscription $subscription): static
     {
         $this->subscription = $subscription;
 

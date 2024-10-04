@@ -35,10 +35,12 @@ class Media
     #[ORM\Column(length: 255)]
     private string $coverImage;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
+    /** @var array<int,string> */
     private array $staff = [];
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
+    /**  @var array<int, string> */
     private array $casting = [];
 
     /**
@@ -256,7 +258,7 @@ class Media
     {
         if (!$this->languages->contains($language)) {
             $this->languages->add($language);
-            $language->addMedium($this);
+            $language->addMedia($this);
         }
 
         return $this;
@@ -265,7 +267,7 @@ class Media
     public function removeLanguage(Language $language): static
     {
         if ($this->languages->removeElement($language)) {
-            $language->removeMedium($this);
+            $language->removeMedia($this);
         }
 
         return $this;
