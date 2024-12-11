@@ -1,6 +1,8 @@
 {% extends "base.html.twig" %}
 
 {% import 'macro/serie_card.html.twig' as macros %}
+{% import 'macro/staff_card.html.twig' as macrosStaff %}
+{% import 'macro/casting_card.html.twig' as macrosCasting %}
 
 {% block body %}
 <div class="flex min-h-screen  2xl:max-w-screen-2xl 2xl:mx-auto 2xl:border-x-2 2xl:border-gray-200">
@@ -26,7 +28,7 @@
                     <span class="text-red-600 font-bold mr-2">
                         <svg class="h-6 w-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>repeat-variant</title><path d="M6,5.75L10.25,10H7V16H13.5L15.5,18H7A2,2 0 0,1 5,16V10H1.75L6,5.75M18,18.25L13.75,14H17V8H10.5L8.5,6H17A2,2 0 0,1 19,8V14H22.25L18,18.25Z" /></svg>
                     </span>
-                    <span class="capitalize font-medium text-md">Trouver un film <span class="text-red-600">similaire</span> </span>
+                    <span class="capitalize font-medium text-md">Trouver une série <span class="text-red-600">similaire</span> </span>
                 </a>
             </div>
         </section>
@@ -111,7 +113,9 @@
                     <span class="flex bg-black/10 m-0.5 px-1 py-0.5 rounded"><b class="mr-2">Sous-titre</b> Français, Anglais</span>
                     <span class="flex bg-black/10 m-0.5 px-1 py-0.5 rounded"><b class="mr-2">Catégories</b>
                         {% for category in serie.getCategories() %}
-                            <a href="{{ path('category', { id : category.id })}}" class="hover:text-red-600 underline decoration-red-400 decoration-2">{{category.label}}</a>,&nbsp;
+                            <a href="{{ path('category', { id: category.id }) }}" class="hover:text-red-600 underline decoration-red-400 decoration-2">
+                            {{ category.label }}
+                        </a>{% if not loop.last %},&nbsp;{% endif %}
                         {% endfor %}
                     </span>
                     <span class="flex bg-black/10 m-0.5 px-1 py-0.5 rounded"><b class="mr-2">Bande annonce</b> <a href="#" class="hover:text-red-600 underline decoration-red-400 decoration-2">Youtube</a></span>
@@ -124,19 +128,17 @@
             <div class="max-w-3xl mx-auto mt-9">
                 <h2 class="text-lg font-medium text-black"><span class="font-bold text-red-600">Équipe</span> du film</h2>
                 <ul class="mt-9 grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-5">
-                    {% include './macro/staff_card.html.twig' %}
-                    {% include './macro/staff_card.html.twig' %}
+                    {% for key, staff in serie.staff %}
+                        {{ macrosStaff.afficheStaff(staff) }}
+                    {% endfor %}
                 </ul>
             </div>
             <div class="max-w-3xl mx-auto mt-9">
                 <h2 class="text-lg font-medium text-black">Le <span class="font-bold text-red-600">Casting</span></h2>
                 <ul class="mt-9 grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-5">
-                    {% include './macro/casting_card.html.twig' %}
-                    {% include './macro/casting_card.html.twig' %}
-                    {% include './macro/casting_card.html.twig' %}
-                    {% include './macro/casting_card.html.twig' %}
-                    {% include './macro/casting_card.html.twig' %}
-                    {% include './macro/casting_card.html.twig' %}
+                    {% for key, casting in serie.casting %}
+                        {{ macrosCasting.afficheCasting(casting) }}
+                    {% endfor %}
                 </ul>
             </div>
             <div class="max-w-3xl mx-auto mt-9">

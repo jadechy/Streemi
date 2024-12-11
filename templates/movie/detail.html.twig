@@ -1,5 +1,8 @@
 {% extends "base.html.twig" %}
 
+{% import 'macro/staff_card.html.twig' as macrosStaff %}
+{% import 'macro/casting_card.html.twig' as macrosCasting %}
+
 {% block body %}
 <div class="flex min-h-screen  2xl:max-w-screen-2xl 2xl:mx-auto 2xl:border-x-2 2xl:border-gray-200">
     
@@ -90,7 +93,9 @@
                     <span class="flex bg-black/10 m-0.5 px-1 py-0.5 rounded"><b class="mr-2">Sous-titre</b> Français, Anglais</span>
                     <span class="flex bg-black/10 m-0.5 px-1 py-0.5 rounded"><b class="mr-2">Catégories</b> 
                     {% for category in movie.getCategories() %}
-                        <a href="{{ path('category', { id : category.id })}}" class="hover:text-red-600 underline decoration-red-400 decoration-2">{{category.label}}</a>,&nbsp;
+                        <a href="{{ path('category', { id: category.id }) }}" class="hover:text-red-600 underline decoration-red-400 decoration-2">
+                            {{ category.label }}
+                        </a>{% if not loop.last %},&nbsp;{% endif %}
                     {% endfor %}
                     </span>
                     <span class="flex bg-black/10 m-0.5 px-1 py-0.5 rounded"><b class="mr-2">Bande annonce</b> <a href="#" class="hover:text-red-600 underline decoration-red-400 decoration-2">Youtube</a>,&nbsp;<a href="#" class="hover:text-red-600 underline decoration-red-400 decoration-2">Allociné</a></span>
@@ -103,14 +108,17 @@
             <div class="max-w-3xl mx-auto mt-9">
                 <h2 class="text-lg font-medium text-black"><span class="font-bold text-red-600">Équipe</span> du film</h2>
                 <ul class="mt-9 grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-5">
-                    {% include './macro/staff_card.html.twig' %}
-                    {% include './macro/staff_card.html.twig' %}
+                    {% for key, staff in movie.staff %}
+                        {{ macrosStaff.afficheStaff(staff) }}
+                    {% endfor %}
                 </ul>
             </div>
             <div class="max-w-3xl mx-auto mt-9">
                 <h2 class="text-lg font-medium text-black">Le <span class="font-bold text-red-600">Casting</span></h2>
                 <ul class="mt-9 grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-5">
-                    {% include './macro/casting_card.html.twig' %}
+                    {% for key, casting in movie.casting %}
+                        {{ macrosCasting.afficheCasting(casting) }}
+                    {% endfor %}
                 </ul>
             </div>
             <div class="max-w-3xl mx-auto mt-9">
