@@ -121,149 +121,33 @@
             <div class="max-w-3xl mx-auto mt-9">
                 <h2 class="text-lg font-medium text-black"><span class="font-bold text-red-600">Équipe</span> du film</h2>
                 <ul class="mt-9 grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-5">
-                    <li class="relative rounded-xl overflow-hidden transition cursor-pointer hover:scale-105 hover:opacity-90 hover:shadow-md min-h-56">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Steve_Franks_by_Gage_Skidmore.jpg/440px-Steve_Franks_by_Gage_Skidmore.jpg" class="object-cover h-full w-full -z-10" alt="">
-                        <div class="absolute top-0 h-full w-full bg-gradient-to-t from-black/50 p-3 flex flex-col justify-end">
-                            <div class="self-center flex flex-col items-center space-y-2">
-                                <span class="capitalize text-white font-medium drop-shadow-md">Steve Franks</span>
-                                <span class="text-gray-100 text-xs">Scénarise</span>
-                            </div>
-                        </div>
-                    </li>
+                    {% include './macro/staff_card.html.twig' %}
+                    {% include './macro/staff_card.html.twig' %}
                 </ul>
             </div>
             <div class="max-w-3xl mx-auto mt-9">
                 <h2 class="text-lg font-medium text-black">Le <span class="font-bold text-red-600">Casting</span></h2>
                 <ul class="mt-9 grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-5">
-                    <li class="relative rounded-xl overflow-hidden transition cursor-pointer hover:scale-105 hover:opacity-90 hover:shadow-md">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/James_Roday_by_Gage_Skidmore.jpg/306px-James_Roday_by_Gage_Skidmore.jpg" class="object-cover h-full w-full -z-10" alt="">
-                        <div class="absolute top-0 h-full w-full bg-gradient-to-t from-black/50 p-3 flex flex-col justify-end">
-                            <div class="self-center flex flex-col items-center space-y-2">
-                                <span class="capitalize text-white font-medium drop-shadow-md">James Roday</span>
-                                <span class="text-gray-100 text-xs truncate">Shawn Spencer</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="relative rounded-xl overflow-hidden transition cursor-pointer hover:scale-105 hover:opacity-90 hover:shadow-md">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Dule_Hill_by_Gage_Skidmore.jpg/313px-Dule_Hill_by_Gage_Skidmore.jpg" class="object-cover h-full w-full -z-10" alt="">
-                        <div class="absolute top-0 h-full w-full bg-gradient-to-t from-black/50 p-3 flex flex-col justify-end">
-                            <div class="self-center flex flex-col items-center space-y-2">
-                                <span class="capitalize text-white font-medium drop-shadow-md">Dulé Hill</span>
-                                <span class="text-gray-100 text-xs truncate">Burton « Gus » Guster</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="relative rounded-xl overflow-hidden transition cursor-pointer hover:scale-105 hover:opacity-90 hover:shadow-md">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Timothy_Omundson_by_Gage_Skidmore.jpg/280px-Timothy_Omundson_by_Gage_Skidmore.jpg" class="object-cover h-full w-full -z-10" alt="">
-                        <div class="absolute top-0 h-full w-full bg-gradient-to-t from-black/50 p-3 flex flex-col justify-end">
-                            <div class="self-center flex flex-col items-center space-y-2">
-                                <span class="capitalize text-white font-medium drop-shadow-md">Timothy Omundson</span>
-                                <span class="text-gray-100 text-xs truncate">Carlton J. Lassiter</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="relative rounded-xl overflow-hidden transition cursor-pointer hover:scale-105 hover:opacity-90 hover:shadow-md">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Maggie_Lawson_by_Gage_Skidmore.jpg/294px-Maggie_Lawson_by_Gage_Skidmore.jpg" class="object-cover h-full w-full -z-10" alt="">
-                        <div class="absolute top-0 h-full w-full bg-gradient-to-t from-black/50 p-3 flex flex-col justify-end">
-                            <div class="self-center flex flex-col items-center space-y-2">
-                                <span class="capitalize text-white font-medium drop-shadow-md">Maggie Lawson</span>
-                                <span class="text-gray-100 text-xs truncate">Juliet O'Hara</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="relative rounded-xl overflow-hidden transition cursor-pointer hover:scale-105 hover:opacity-90 hover:shadow-md">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Kirsten_Nelson_by_Gage_Skidmore.jpg/295px-Kirsten_Nelson_by_Gage_Skidmore.jpg" class="object-cover h-full w-full -z-10" alt="">
-                        <div class="absolute top-0 h-full w-full bg-gradient-to-t from-black/50 p-3 flex flex-col justify-end">
-                            <div class="self-center flex flex-col items-center space-y-2">
-                                <span class="capitalize text-white font-medium drop-shadow-md">Kirsten Nelson</span>
-                                <span class="text-gray-100 text-xs truncate">Cheffe Karen Vick</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="relative rounded-xl overflow-hidden transition cursor-pointer hover:scale-105 hover:opacity-90 hover:shadow-md">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Corbin_Bernsen_by_Gage_Skidmore.jpg/314px-Corbin_Bernsen_by_Gage_Skidmore.jpg" class="object-cover h-full w-full -z-10" alt="">
-                        <div class="absolute top-0 h-full w-full bg-gradient-to-t from-black/50 p-3 flex flex-col justify-end">
-                            <div class="self-center flex flex-col items-center space-y-2">
-                                <span class="capitalize text-white font-medium drop-shadow-md">Corbin Bernsen</span>
-                                <span class="text-gray-100 text-xs truncate">Henry Spencer</span>
-                            </div>
-                        </div>
-                    </li>
+                    {% include './macro/casting_card.html.twig' %}
+                    {% include './macro/casting_card.html.twig' %}
+                    {% include './macro/casting_card.html.twig' %}
+                    {% include './macro/casting_card.html.twig' %}
+                    {% include './macro/casting_card.html.twig' %}
+                    {% include './macro/casting_card.html.twig' %}
                 </ul>
             </div>
             <div class="max-w-3xl mx-auto mt-9">
                 <h2 class="text-lg font-medium text-black">Résumé <span class="font-bold text-red-600">détaillé</span></h2>
-                <p class="text-md mt-9">
-                    Shawn Spencer, un homme drôle et futé, a développé durant son enfance un talent pour remarquer les moindres détails grâce à l'enseignement de son père Henry Spencer, un ancien policier.
-                    <br><br>En grandissant, confronté à la dure réalité de l'emploi, ne parvenant pas à trouver un métier qui puisse lui plaire, il passe son temps à en changer et à donner des informations aux inspecteurs de police par l'intermédiaire d'appels téléphoniques. À partir de là s'ensuit un énorme quiproquo : le fait de fournir de nombreuses informations aux inspecteurs, poussent ces derniers à le suspecter de perpétrer lui-même ces crimes. N'ayant pas d'autre solution pour se sortir de cette situation, il prétend posséder des pouvoirs psychiques de médium.
-                    <br><br>C'est ainsi qu'il devient consultant, en aidant les lieutenants Carlton Lassiter et Juliet O'Hara ainsi que leur chef Karen Vick, dans leurs enquêtes lorsqu'ils feront appel à lui pour certaines affaires apparemment insolubles ou pas assez importantes pour que la police s'en occupe, selon le cas. Dans ces enquêtes, il embarque son meilleur ami d'enfance, Burton « Gus » Guster et créent ensemble l'agence « Psych ». Ils vont alors tenter de résoudre chaque affaire en utilisant ses dons d'observation, camouflés en visions envoyées par des esprits. Gus est moins téméraire que Shawn et tous les deux se disputent souvent pour des détails pour le meilleur comme pour le pire…
+                <p class="text-md mt-9">{{serie.longDescription}}</p>
             </div>
         </section>
         <section class="mt-9">
             <div class="max-w-3xl mx-auto">
                 <h2 class="text-lg font-medium text-black">Les <span class="font-bold text-red-600">commentaires</span></h2>
                 <ul class="space-y-4">
-                    <li class="mt-9">
-                        <div class="bg-gray-100 p-4 rounded-lg">
-                            <div class="flex items-center">
-                                <img src="https://random.imagecdn.app/100/100?a" class="w-10 h-10 rounded-full" alt="">
-                                <div class="ml-4 w-full">
-                                    <span class="font-medium">John Doe</span>
-                                    <span class="text-xs text-gray-500 flex items-center justify-between w-full">
-                                    <span>Il y a 2 jours</span>
-                                    <span></span>
-                                </span>
-                                </div>
-                            </div>
-                            <p class="mt-4 w-full">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, consectetur deleniti deserunt ducimus harum iusto laboriosam minima nobis obcaecati odit officiis omnis quibusdam repellat repudiandae totam voluptas, voluptatem voluptatibus voluptatum.</p>
-                        </div>
-                    </li>
-                    <li class="mt-9 pl-9 border-l-4">
-                        <div class="bg-gray-100 p-4 rounded-lg">
-                            <div class="flex items-center">
-                                <img src="https://random.imagecdn.app/100/100?b" class="w-10 h-10 rounded-full" alt="">
-                                <div class="ml-4 w-full">
-                                    <span class="font-medium">Jane Doe</span>
-                                    <span class="text-xs text-gray-500 flex items-center justify-between w-full">
-                                    <span>Il y a 4 heures</span>
-                                    <span></span>
-                                </span>
-                                </div>
-                            </div>
-                            <p class="mt-4 w-full">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, consectetur deleniti deserunt ducimus harum iusto laboriosam minima nobis obcaecati.</p>
-                        </div>
-                    </li>
-                    <li class="mt-9 pl-9 border-l-4">
-                        <div class="bg-gray-100 p-4 rounded-lg">
-                            <div class="flex items-center">
-                                <img src="https://random.imagecdn.app/100/100?c" class="w-10 h-10 rounded-full" alt="">
-                                <div class="ml-4 w-full">
-                                    <span class="font-medium">Marco Doe</span>
-                                    <span class="text-xs text-gray-500 flex items-center justify-between w-full">
-                                    <span>Il y a 1 heures</span>
-                                    <span></span>
-                                </span>
-                                </div>
-                            </div>
-                            <p class="mt-4 w-full">Lorem ipsum dolor sit amet !!</p>
-                        </div>
-                    </li>
-                    <li class="mt-9 pl-9 border-l-4 relative cursor-not-allowed">
-                        <span class="absolute top-2 right-2 px-3 py-1 bg-orange-100 rounded-md">En attente de vérification</span>
-                        <div class="bg-gray-100 p-4 rounded-lg opacity-40">
-                            <div class="flex items-center">
-                                <img src="https://random.imagecdn.app/100/100?c" class="w-10 h-10 rounded-full" alt="">
-                                <div class="ml-4 w-full">
-                                    <span class="font-medium">Harry Potter</span>
-                                    <span class="text-xs text-gray-500 flex items-center justify-between w-full">
-                                    <span>Il y a 1O secondes</span>
-                                    <span></span>
-                                </span>
-                                </div>
-                            </div>
-                            <p class="mt-4 w-full">Lorem ipsum dolor sit amet !!</p>
-                        </div>
-                    </li>
+                    {% include './macro/main_comment.html.twig' %}
+                    {% include './macro/response_comment.html.twig' %}
+                    {% include './macro/response_comment.html.twig' %}
                 </ul>
                 <form class="mt-9 bg-gray-100 p-4 rounded-lg">
                     <h3 class="text-center text-md font-bold my-4">Réagir / commenter le film ?</h3>
