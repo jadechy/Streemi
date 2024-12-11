@@ -35,12 +35,16 @@ class Media
     #[ORM\Column(length: 255)]
     private string $coverImage;
 
+    /**
+     * @var array<int, string> $staff
+     */
     #[ORM\Column(type: 'json')]
-    /** @var array<int,string> */
     private array $staff = [];
 
+    /**
+     * @var array<int, string> $casting
+     */
     #[ORM\Column(type: 'json')]
-    /**  @var array<int, string> */
     private array $casting = [];
 
     /**
@@ -144,11 +148,13 @@ class Media
         return $this;
     }
 
+    /** @return array<int, string> */
     public function getStaff(): array
     {
         return $this->staff;
     }
 
+    /** @param array<int, string> $staff */
     public function setStaff(array $staff): static
     {
         $this->staff = $staff;
@@ -156,11 +162,13 @@ class Media
         return $this;
     }
 
+    /** @return array<int, string> */
     public function getCasting(): array
     {
         return $this->casting;
     }
 
+    /** @param array<int, string> $casting */
     public function setCasting(array $casting): static
     {
         $this->casting = $casting;

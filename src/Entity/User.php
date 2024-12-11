@@ -137,7 +137,7 @@ class User
     {
         if (!$this->subscriptionHistories->contains($subscriptionHistory)) {
             $this->subscriptionHistories->add($subscriptionHistory);
-            $subscriptionHistory->setAuthor($this);
+            $subscriptionHistory->setSubscriber($this);
         }
 
         return $this;
@@ -147,8 +147,8 @@ class User
     {
         if ($this->subscriptionHistories->removeElement($subscriptionHistory)) {
             // set the owning side to null (unless already changed)
-            if ($subscriptionHistory->getAuthor() === $this) {
-                $subscriptionHistory->setAuthor(null);
+            if ($subscriptionHistory->getSubscriber() === $this) {
+                $subscriptionHistory->setSubscriber(null);
             }
         }
 
@@ -263,7 +263,7 @@ class User
     {
         if (!$this->playlistSubscriptions->contains($playlistSubscription)) {
             $this->playlistSubscriptions->add($playlistSubscription);
-            $playlistSubscription->setSuscriber($this);
+            $playlistSubscription->setSubscriber($this);
         }
 
         return $this;
@@ -273,8 +273,8 @@ class User
     {
         if ($this->playlistSubscriptions->removeElement($playlistSubscription)) {
             // set the owning side to null (unless already changed)
-            if ($playlistSubscription->getSuscriber() === $this) {
-                $playlistSubscription->setSuscriber(null);
+            if ($playlistSubscription->getSubscriber() === $this) {
+                $playlistSubscription->setSubscriber(null);
             }
         }
 

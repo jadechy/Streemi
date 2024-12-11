@@ -52,7 +52,7 @@ class Season
 
     public function getShortSeasonNumber(): string 
     {
-        return preg_replace('/\s+/', '', str_replace('Saison', 'S', $this->seasonNumber));
+        return (string) preg_replace('/\s+/', '', str_replace('Saison', 'S', $this->seasonNumber));
     }
 
     /**
