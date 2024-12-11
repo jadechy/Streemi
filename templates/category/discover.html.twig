@@ -1,5 +1,7 @@
 {% extends "base.html.twig" %}
+
 {% import 'macro/category_card.html.twig' as macros %}
+{% import 'macro/movie_card.html.twig' as macrosCard %}
 
 {% block body %}
 <div class="flex min-h-screen  2xl:max-w-screen-2xl 2xl:mx-auto 2xl:border-x-2 2xl:border-gray-200">
@@ -50,9 +52,9 @@
             </div>
 
             <ul class="mt-4 grid grid-cols-2 gap-y-5 sm:grid-cols-3 gap-x-5 ">
-                {% include './macro/movie_card.html.twig' %}
-                {% include './macro/movie_card.html.twig' %}
-                {% include './macro/movie_card.html.twig' %}
+                {% for cle, media in mediasTendance %}
+                    {{macrosCard.afficheMediaCard(cle, media)}}
+                {% endfor %}
             </ul>
 
         </section>
