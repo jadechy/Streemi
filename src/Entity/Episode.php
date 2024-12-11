@@ -44,6 +44,15 @@ class Episode
         return $this;
     }
 
+    public function getShortTitle(): string 
+    {
+        if (preg_match('/Episode\s*(\d+)/i', $this->title, $matches)) {
+            return sprintf('E%02d', $matches[1]);
+        }
+    
+        return $this->title;
+    }
+
     public function getDuration(): int
     {
         return $this->duration;

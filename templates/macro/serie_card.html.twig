@@ -1,3 +1,4 @@
+{% macro AfficheEpisodeSeason(season, episode) %}
 <li class="mt-4 flex flex-row gap-y-5 p-4 rounded-lg transition cursor-pointer hover:bg-gray-100">
     <div class="relative flex flex-col rounded-xl w-1/5 overflow-hidden aspect-square border cursor-pointer transition hover:shadow-md bg-center bg-cover" style="background-image: url('https://www.numerama.com/wp-content/uploads/2024/05/psych-shawn-kate-gus.jpg')">
         <div class="absolute top-0 left-0 w-full h-full bg-black/10 flex items-center justify-center text-white hover:bg-black/60 transition opacity-10 hover:opacity-100">
@@ -9,7 +10,8 @@
     </div>
     <div class="flex items-start justify-center w-4/5 flex-col pl-8">
         <h2 class="font-bold text-xl">{{episode.title}}</h2>
-        <h3 class="font-medium text-lg text-black/70">S4 - E01</h3>
+        <h3 class="font-medium text-lg text-black/70">{{season.getShortSeasonNumber()}} - {{episode.getShortTitle()}}</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias autem exercitationem harum natus necessitatibus nesciunt provident quasi quo sint tenetur.</p>
     </div>
 </li>
+{% endmacro %}

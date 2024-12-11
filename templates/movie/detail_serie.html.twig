@@ -1,5 +1,7 @@
 {% extends "base.html.twig" %}
 
+{% import 'macro/serie_card.html.twig' as macros %}
+
 {% block body %}
 <div class="flex min-h-screen  2xl:max-w-screen-2xl 2xl:mx-auto 2xl:border-x-2 2xl:border-gray-200">
     
@@ -71,8 +73,9 @@
                 <h2 class="text-lg font-medium text-black">Les <span class="font-bold text-red-600">épisodes</span></h2>
                 <ul>
                     {% for season in serie.getSeasons() %}
+                        <h3 class="font-bold text-xl mt-3">{{season.seasonNumber}}</h3>
                         {% for episode in season.getEpisodes() %}
-                            {% include './macro/serie_card.html.twig' %}
+                            {{macros.afficheEpisodeSeason(season,episode)}}
                         {% endfor %}
                     {% endfor %}
                 </ul>
