@@ -37,6 +37,7 @@ class AppFixtures extends Fixture
     public const MAX_SUBSCRIPTIONS_HISTORY_PER_USER = 3;
     public const MAX_COMMENTS_PER_MEDIA = 10;
     public const MAX_PLAYLIST_SUBSCRIPTION_PER_USERS = 3;
+    public const MAX_WATCH_HISTORY_MEDIA_PER_USERS = 10;
 
     public function load(ObjectManager $manager): void
     {
@@ -46,13 +47,6 @@ class AppFixtures extends Fixture
         $categories = [];
         $languages = [];
         $subscriptions = [];
-
-        // $users = $this->generateUsers($manager);
-        // $medias = $this->generateMedias($manager);
-        // $categories = $this->generateCategories($manager, $medias);
-        // $languages = $this->generateLanguages($manager, $medias);
-
-        // $manager->flush();
 
         $this->createUsers($manager, $users);
         $this->createPlaylists($manager, $users, $playlists);
@@ -68,6 +62,7 @@ class AppFixtures extends Fixture
         $this->linkMediaToLanguages($medias, $languages);
 
         $this->addUserPlaylistSubscriptions($manager, $users, $playlists);
+        $this->addUserWatchHistory($manager, $users, $medias);
 
         $manager->flush();
     }
@@ -247,30 +242,6 @@ class AppFixtures extends Fixture
         }
     }
 
-    
-    // protected function generateLanguages(ObjectManager $manager, array $medias): array
-    // {
-    //     $tabs = [['fr', 'Français'], ['en', 'Anglais'], ['es', 'Espagnol'], ['de', 'Allemand'], ['it', 'Italien'], ['pt', 'Portugais'], ['ru', 'Russe'], ['zh', 'Chinois'], ['ja', 'Japonais'], ['ar', 'Arabe'], ['hi', 'Hindi'], ['bn', 'Bengali'], ['pt', 'Portugais'], ['ru', 'Russe'], ['ko', 'Coréen'], ['tr', 'Turc'], ['nl', 'Néerlandais'], ['pl', 'Polonais'], ['vi', 'Vietnamien'], ['sv', 'Suédois'], ['cs', 'Tchèque'], ['fi', 'Finnois'], ['el', 'Grec'], ['da', 'Danois'], ['no', 'Norvégien'], ['he', 'Hébreu'], ['id', 'Indonésien'], ['ms', 'Malais'], ['th', 'Thaï'], ['hu', 'Hongrois'], ['sk', 'Slovaque'], ['ro', 'Roumain'], ['bg', 'Bulgare'], ['uk', 'Ukrainien'], ['hr', 'Croate'], ['ca', 'Catalan'], ['sr', 'Serbe'], ['lt', 'Lituanien'], ['sl', 'Slovène'], ['et', 'Estonien'], ['lv', 'Letton'], ['mk', 'Macédonien'], ['sq', 'Albanais'], ['hy', 'Arménien'], ['ka', 'Géorgien'], ['uz', 'Ouzbek'], ['kk', 'Kazakh'], ['az', 'Azéri'], ['tg', 'Tadjik'], ['tk', 'Turkmène'], ['mn', 'Mongol'], ['ky', 'Kirghiz'], ['si', 'Sinhala'], ['am', 'Amharique'], ['km', 'Khmer'], ['lo', 'Lao'], ['my', 'Birman'],];
-    //     $languages = [];
-
-    //     foreach ($tabs as $tab) {
-    //         $entity = new Language();
-    //         $entity->setCode($tab[0]);
-    //         $entity->setName($tab[1]);
-    //         $manager->persist($entity);
-    //         $languages[] = $entity;
-
-    //         for ($k = 0; $k < random_int(0, 20); $k++) {
-    //             $media = $medias[array_rand($medias)];
-    //             $media->addLanguage($entity);
-    //         }
-    //     }
-
-    //     return $languages;
-    // }
-
-    // link methods
-
     protected function linkMediaToCategories(array $medias, array $categories): void
     {
         /** @var Media $media */
@@ -376,86 +347,40 @@ class AppFixtures extends Fixture
         }
     }
 
-    // /** @return Subscription[] */
-    // protected function generateSubscription(ObjectManager $manager) : array
-    // {
-    //     $subscriptions = [];
-    //     $tabs = [
-    //         ['name'=>'HD', 'price' => 3, 'durationInMonths' => 1],
-    //         ['name'=>'4K HDR', 'price' => 6, 'durationInMonths' => 1],
-    //         ['name'=>'HD', 'price' => 30, 'durationInMonths' => 12],
-    //         ['name'=>'4K HDR 3D', 'price' => 30, 'durationInMonths' => 12],
-    //     ];
-    //     foreach ($tabs as $tab){
-    //         $subscription = new Subscription();
-    //         $subscription->setName($tab['name']);
-    //         $subscription->setPrice($tab['price']);
-    //         $subscription->setDurationInMonths($tab['durationInMonths']);
-    //         $subscriptions[] = $subscription;
-    //         $manager->persist($subscription);
-    //     }
+    protected function addUserWatchHistory(ObjectManager $manager, array $users, array $medias): void
+    {
+        /** @var User $user */
+        foreach ($users as $user) {
+            for ($i = 0; $i < random_int(0, self::MAX_WATCH_HISTORY_MEDIA_PER_USERS); $i++){
+                $watchHistory = new WatchHistory();
+                $watchHistory->setLastWatched(new \DateTimeImmutable('now'));
+                $watchHistory->setNumberOfViews(random_int(1, 100));
 
-    //     return $subscriptions;
-    // }
+                $user->setWatchHistory($watchHistory);
+                $manager->persist($watchHistory);
 
-    // /**
-    //  * @return Category[] 
-    //  * @param array<Movie|Serie> $medias
-    //  */
-    // protected function generateCategories(ObjectManager $manager, array $medias): array
-    // {
-    //     $categories = [];
-    //     $tabs = ['Action', 'Aventure', 'Comédie', 'Drame', 'Fantastique', 'Horreur', 'Policier', 'Science-fiction', 'Thriller'];
-    //     foreach ($tabs as $tab) {
-    //         $category = new Category();
-    //         $category->setLabel($tab);
-    //         /** @var string $result */
-    //         $result = preg_replace('/[^a-zA-Z0-9]/', '', $tab);
-    //         $category->setName(strtolower($result));
-    //         $manager->persist($category);
-    //         $categories[] = $category;
+                $associatedMedias = [];
+                $numberOfMedias = max(random_int(1, 5), 1); // Toujours au moins un média
 
-    //         for ($k = 0; $k < random_int(0, 20); $k++) {
-    //             $media = $medias[array_rand($medias)];
-    //             $media->addCategory($category);
-    //         }
-    //     }
+                for ($i = 0; $i < $numberOfMedias; $i++) {
+                    $randomMedia = $medias[array_rand($medias)];
+                    
+                    // Éviter les doublons dans les médias associés
+                    if (!in_array($randomMedia, $associatedMedias, true)) {
+                        $associatedMedias[] = $randomMedia;
+                        $watchHistory->addMedium($randomMedia);
+                    }
+                }
 
-    //     return $categories;
-    // }
+                // Vérifiez qu'au moins un média est associé (au cas où la boucle serait mal exécutée)
+                if (count($associatedMedias) === 0) {
+                    $randomMedia = $medias[array_rand($medias)];
+                    $watchHistory->addMedium($randomMedia);
+                }
 
-    // /**
-    //  * @return array<Movie|Serie>
-    //  */
-    // protected function generateMedias(ObjectManager $manager): array
-    // {
-    //     /** @var array<Movie|Serie> $medias */
-    //     $medias = [];
-    //     for ($j = 0; $j < random_int(10, 20); $j++) {
-    //         $movie = new Movie();
-    //         $movie->setTitle("movie_{$j}");
-    //         $movie->setShortDescription("short description for movie_{$j}");
-    //         $movie->setLongDescription("long description for movie_{$j}");
-    //         $movie->setCoverImage("cover_image_{$j}.png");
-    //         $movie->setReleaseDate(new \DateTime());
-    //         $movie->setCasting([]);
-    //         $movie->setStaff([]);
-    //         $medias[] = $movie;
-    //         $manager->persist($movie);
-    //     }
+                $watchHistory->addAuthor($user);
+            }
+        }
+    }
 
-    //     for ($j = 0; $j < random_int(10, 20); $j++) {
-    //         $serie = new Serie();
-    //         $serie->setTitle("serie_{$j}");
-    //         $serie->setShortDescription("short description for serie_{$j}");
-    //         $serie->setLongDescription("long description for serie_{$j}");
-    //         $serie->setCoverImage("cover_image_{$j}.png");
-    //         $serie->setReleaseDate(new \DateTime());
-    //         $serie->setCasting([]);
-    //         $serie->setStaff([]);
-    //         $medias[] = $serie;
-    //         $manager->persist($serie);
-    //     }
-    //     return $medias;
-    // }
 }
