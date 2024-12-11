@@ -30,10 +30,6 @@ class CategoryController extends AbstractController
                 'media' => 'movie'
             ]);
         }
-
-        return $this->render('category/discover.html.twig',[
-            'categories' => $categories,
-        ]);
     }
 
     #[Route('/category/{id}', name: 'category')]
@@ -56,10 +52,5 @@ class CategoryController extends AbstractController
                 'media' => 'movie'
             ]);
         }
-
-        return $this->render('category/category.html.twig',[
-            'categoryChose' => $category,
-            'categories' => $categories,
-        ]);
     }
 }

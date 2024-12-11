@@ -23,7 +23,5 @@ class HomeController extends AbstractController
                 'media' => 'movie',
             ]);
         }
-
-        return $this->render('home/index.html.twig');
     }
 }
