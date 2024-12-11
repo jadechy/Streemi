@@ -75,14 +75,14 @@ class AppFixtures extends Fixture
     protected function createSubscriptions(ObjectManager $manager, array $users, array &$subscriptions): void
     {
         $array = [
-            ['name' => 'Abonnement 1 mois - HD', 'duration' => 1, 'price' => 3],
-            ['name' => 'Abonnement 3 mois - HD', 'duration' => 3, 'price' => 8],
-            ['name' => 'Abonnement 6 mois - HD', 'duration' => 6, 'price' => 15],
-            ['name' => 'Abonnement 1 an - HD', 'duration' => 12, 'price' => 25],
-            ['name' => 'Abonnement 1 mois - 4K HDR', 'duration' => 1, 'price' => 6],
-            ['name' => 'Abonnement 3 mois - 4K HDR', 'duration' => 3, 'price' => 15],
-            ['name' => 'Abonnement 6 mois - 4K HDR', 'duration' => 6, 'price' => 30],
-            ['name' => 'Abonnement 1 an - 4K HDR', 'duration' => 12, 'price' => 50],
+            ['name' => 'HD', 'duration' => 1, 'price' => 3],
+            ['name' => 'HD', 'duration' => 3, 'price' => 8],
+            ['name' => 'HD', 'duration' => 6, 'price' => 15],
+            ['name' => 'HD', 'duration' => 12, 'price' => 25],
+            ['name' => '4K HDR', 'duration' => 1, 'price' => 6],
+            ['name' => '4K HDR', 'duration' => 3, 'price' => 15],
+            ['name' => '4K HDR', 'duration' => 6, 'price' => 30],
+            ['name' => '4K HDR', 'duration' => 12, 'price' => 50],
 
         ];
 
@@ -370,7 +370,7 @@ class AppFixtures extends Fixture
                 $subscription = new PlaylistSubscription();
                 $subscription->setSubscriber($user);
                 $subscription->setPlaylist($playlists[array_rand($playlists)]);
-                $subscription->setSubscribedAt(new \DateTimeImmutable());
+                $subscription->setSubscribedAt(new \DateTimeImmutable('now'));
                 $manager->persist($subscription);
             }
         }
