@@ -6,11 +6,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+use App\Repository\SubscriptionRepository;
+
 class SubscriptionController extends AbstractController
 {
     #[Route('/subscription', name: 'subscription')]
-    public function subscription(): Response
+    public function subscription(SubscriptionRepository $subscriptionRepository): Response
     {
-        return $this->render('subscription/abonnements.html.twig');
+        $subscriptions = $subscriptionRepository->findAll();
+
+        return $this->render('subscription/abonnements.html.twig', [
+            'subscriptions' => $subscriptions
+        ]);
     }
 }
