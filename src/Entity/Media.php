@@ -51,10 +51,6 @@ class Media
 
     #[ORM\ManyToOne(inversedBy: 'media')]
     #[ORM\JoinColumn(nullable: true)]
-    private ?PlaylistMedia $playlistMedia = null;
-
-    #[ORM\ManyToOne(inversedBy: 'media')]
-    #[ORM\JoinColumn(nullable: true)]
     private ?WatchHistory $watchHistory = null;
 
     /**
@@ -69,11 +65,18 @@ class Media
     #[ORM\ManyToMany(targetEntity: Language::class, mappedBy: 'media')]
     private Collection $languages;
 
+    /**
+     * @var Collection<int, PlaylistMedia>
+     */
+    #[ORM\OneToMany(targetEntity: PlaylistMedia::class, mappedBy: 'media')]
+    private Collection $playlistMedia;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->languages = new ArrayCollection();
+        $this->playlistMedia = new ArrayCollection();
     }
 
     public function getId(): int
@@ -165,6 +168,22 @@ class Media
         return $this;
     }
 
+    public function isMovie(): bool
+    {
+        return $this instanceof Movie;
+    }
+
+    public function isSerie(): bool
+    {
+        return $this instanceof Serie;
+    }
+
+    public function getMediaType(): string
+    {
+        return $this->isMovie() ? 'movie' : ($this->isSerie() ? 'serie' : 'unknown');
+    }
+
+
     /**
      * @return Collection<int, Comment>
      */
@@ -191,18 +210,6 @@ class Media
                 $comment->setMedia(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getPlaylistMedia(): ?PlaylistMedia
-    {
-        return $this->playlistMedia;
-    }
-
-    public function setPlaylistMedia(?PlaylistMedia $playlistMedia): static
-    {
-        $this->playlistMedia = $playlistMedia;
 
         return $this;
     }
@@ -268,6 +275,36 @@ class Media
     {
         if ($this->languages->removeElement($language)) {
             $language->removeMedia($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlaylistMedia>
+     */
+    public function getPlaylistMedia(): Collection
+    {
+        return $this->playlistMedia;
+    }
+
+    public function addPlaylistMedium(PlaylistMedia $playlistMedium): static
+    {
+        if (!$this->playlistMedia->contains($playlistMedium)) {
+            $this->playlistMedia->add($playlistMedium);
+            $playlistMedium->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlaylistMedium(PlaylistMedia $playlistMedium): static
+    {
+        if ($this->playlistMedia->removeElement($playlistMedium)) {
+            // set the owning side to null (unless already changed)
+            if ($playlistMedium->getMedia() === $this) {
+                $playlistMedium->setMedia(null);
+            }
         }
 
         return $this;

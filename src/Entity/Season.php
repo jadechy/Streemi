@@ -15,8 +15,8 @@ class Season
     #[ORM\Column]
     private int $id;
 
-    #[ORM\Column]
-    private int $seasonNumber;
+    #[ORM\Column(length: 255)]
+    private string $seasonNumber;
 
     /**
      * @var Collection<int, Episode>
@@ -38,12 +38,12 @@ class Season
         return $this->id;
     }
 
-    public function getSeasonNumber(): int
+    public function getSeasonNumber(): string
     {
         return $this->seasonNumber;
     }
 
-    public function setSeasonNumber(int $seasonNumber): static
+    public function setSeasonNumber(string $seasonNumber): static
     {
         $this->seasonNumber = $seasonNumber;
 

@@ -20,7 +20,7 @@ class Subscription
     private string $name;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private string $price;
+    private int $price;
 
     #[ORM\Column]
     private int $durationInMonths;
@@ -60,12 +60,12 @@ class Subscription
         return $this;
     }
 
-    public function getPrice(): string
+    public function getPrice(): int
     {
         return $this->price;
     }
 
-    public function setPrice(string $price): static
+    public function setPrice(int $price): static
     {
         $this->price = $price;
 

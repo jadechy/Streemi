@@ -52,10 +52,24 @@ class User
     #[ORM\JoinColumn(nullable: true)]
     private ?PlaylistSubscription $playlistSubscription = null;
 
+    /**
+     * @var Collection<int, Playlist>
+     */
+    #[ORM\OneToMany(targetEntity: Playlist::class, mappedBy: 'creator')]
+    private Collection $playlists;
+
+    /**
+     * @var Collection<int, PlaylistSubscription>
+     */
+    #[ORM\OneToMany(targetEntity: PlaylistSubscription::class, mappedBy: 'suscriber')]
+    private Collection $playlistSubscriptions;
+
     public function __construct()
     {
         $this->subscriptionHistories = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->playlists = new ArrayCollection();
+        $this->playlistSubscriptions = new ArrayCollection();
     }
 
     public function getId(): int
@@ -203,6 +217,66 @@ class User
     public function setPlaylistSubscription(?PlaylistSubscription $playlistSubscription): static
     {
         $this->playlistSubscription = $playlistSubscription;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Playlist>
+     */
+    public function getPlaylists(): Collection
+    {
+        return $this->playlists;
+    }
+
+    public function addPlaylist(Playlist $playlist): static
+    {
+        if (!$this->playlists->contains($playlist)) {
+            $this->playlists->add($playlist);
+            $playlist->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlaylist(Playlist $playlist): static
+    {
+        if ($this->playlists->removeElement($playlist)) {
+            // set the owning side to null (unless already changed)
+            if ($playlist->getCreator() === $this) {
+                $playlist->setCreator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlaylistSubscription>
+     */
+    public function getPlaylistSubscriptions(): Collection
+    {
+        return $this->playlistSubscriptions;
+    }
+
+    public function addPlaylistSubscription(PlaylistSubscription $playlistSubscription): static
+    {
+        if (!$this->playlistSubscriptions->contains($playlistSubscription)) {
+            $this->playlistSubscriptions->add($playlistSubscription);
+            $playlistSubscription->setSuscriber($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlaylistSubscription(PlaylistSubscription $playlistSubscription): static
+    {
+        if ($this->playlistSubscriptions->removeElement($playlistSubscription)) {
+            // set the owning side to null (unless already changed)
+            if ($playlistSubscription->getSuscriber() === $this) {
+                $playlistSubscription->setSuscriber(null);
+            }
+        }
 
         return $this;
     }

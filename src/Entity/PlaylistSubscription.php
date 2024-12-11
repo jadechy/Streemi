@@ -17,24 +17,17 @@ class PlaylistSubscription
     private int $id;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private \DateTimeInterface $suscribedAt;
+    private \DateTimeInterface $subscribedAt;
 
-    /**
-     * @var Collection<int, Playlist>
-     */
-    #[ORM\OneToMany(targetEntity: Playlist::class, mappedBy: 'playlistSubscription')]
-    private Collection $playlist;
+    #[ORM\ManyToOne(inversedBy: 'playlistSubscriptions')]
+    private ?User $subscriber = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'playlistSubscription')]
-    private Collection $author;
+    #[ORM\ManyToOne(inversedBy: 'playlistSubscriptions')]
+    private ?Playlist $playlist = null;
 
     public function __construct()
     {
-        $this->playlist = new ArrayCollection();
-        $this->author = new ArrayCollection();
+    
     }
 
     public function getId(): int
@@ -42,74 +35,38 @@ class PlaylistSubscription
         return $this->id;
     }
 
-    public function getSuscribedAt(): \DateTimeInterface
+    public function getSubscribedAt(): \DateTimeInterface
     {
         return $this->suscribedAt;
     }
 
-    public function setSuscribedAt(\DateTimeInterface $suscribedAt): static
+    public function setSubscribedAt(\DateTimeInterface $suscribedAt): static
     {
         $this->suscribedAt = $suscribedAt;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Playlist>
-     */
-    public function getPlaylist(): Collection
+    public function getSubscriber(): ?User
+    {
+        return $this->subscriber;
+    }
+
+    public function setSubscriber(?User $subscriber): static
+    {
+        $this->subscriber = $subscriber;
+
+        return $this;
+    }
+
+    public function getPlaylist(): ?Playlist
     {
         return $this->playlist;
     }
 
-    public function addPlaylist(Playlist $playlist): static
+    public function setPlaylist(?Playlist $playlist): static
     {
-        if (!$this->playlist->contains($playlist)) {
-            $this->playlist->add($playlist);
-            $playlist->setPlaylistSubscription($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlaylist(Playlist $playlist): static
-    {
-        if ($this->playlist->removeElement($playlist)) {
-            // set the owning side to null (unless already changed)
-            if ($playlist->getPlaylistSubscription() === $this) {
-                $playlist->setPlaylistSubscription(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getAuthor(): Collection
-    {
-        return $this->author;
-    }
-
-    public function addAuthor(User $author): static
-    {
-        if (!$this->author->contains($author)) {
-            $this->author->add($author);
-            $author->setPlaylistSubscription($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAuthor(User $author): static
-    {
-        if ($this->author->removeElement($author)) {
-            // set the owning side to null (unless already changed)
-            if ($author->getPlaylistSubscription() === $this) {
-                $author->setPlaylistSubscription(null);
-            }
-        }
+        $this->playlist = $playlist;
 
         return $this;
     }
