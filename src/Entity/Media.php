@@ -53,10 +53,6 @@ class Media
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'media')]
     private Collection $comments;
 
-    #[ORM\ManyToOne(inversedBy: 'media')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?WatchHistory $watchHistory = null;
-
     /**
      * @var Collection<int, Category>
      */
@@ -75,12 +71,19 @@ class Media
     #[ORM\OneToMany(targetEntity: PlaylistMedia::class, mappedBy: 'media')]
     private Collection $playlistMedia;
 
+    /**
+     * @var Collection<int, WatchHistory>
+     */
+    #[ORM\OneToMany(targetEntity: WatchHistory::class, mappedBy: 'media')]
+    private Collection $watchHistories;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->languages = new ArrayCollection();
         $this->playlistMedia = new ArrayCollection();
+        $this->watchHistories = new ArrayCollection();
     }
 
     public function getId(): int
@@ -222,18 +225,6 @@ class Media
         return $this;
     }
 
-    public function getWatchHistory(): ?WatchHistory
-    {
-        return $this->watchHistory;
-    }
-
-    public function setWatchHistory(?WatchHistory $watchHistory): static
-    {
-        $this->watchHistory = $watchHistory;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Category>
      */
@@ -312,6 +303,36 @@ class Media
             // set the owning side to null (unless already changed)
             if ($playlistMedium->getMedia() === $this) {
                 $playlistMedium->setMedia(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WatchHistory>
+     */
+    public function getWatchHistories(): Collection
+    {
+        return $this->watchHistories;
+    }
+
+    public function addWatchHistory(WatchHistory $watchHistory): static
+    {
+        if (!$this->watchHistories->contains($watchHistory)) {
+            $this->watchHistories->add($watchHistory);
+            $watchHistory->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWatchHistory(WatchHistory $watchHistory): static
+    {
+        if ($this->watchHistories->removeElement($watchHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($watchHistory->getMedia() === $this) {
+                $watchHistory->setMedia(null);
             }
         }
 

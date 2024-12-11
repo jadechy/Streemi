@@ -46,10 +46,6 @@ class User
 
     #[ORM\ManyToOne(inversedBy: 'author')]
     #[ORM\JoinColumn(nullable: true)]
-    private ?WatchHistory $watchHistory = null;
-
-    #[ORM\ManyToOne(inversedBy: 'author')]
-    #[ORM\JoinColumn(nullable: true)]
     private ?PlaylistSubscription $playlistSubscription = null;
 
     /**
@@ -64,12 +60,19 @@ class User
     #[ORM\OneToMany(targetEntity: PlaylistSubscription::class, mappedBy: 'suscriber')]
     private Collection $playlistSubscriptions;
 
+    /**
+     * @var Collection<int, WatchHistory>
+     */
+    #[ORM\OneToMany(targetEntity: WatchHistory::class, mappedBy: 'watcher')]
+    private Collection $watchHistories;
+
     public function __construct()
     {
         $this->subscriptionHistories = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->playlists = new ArrayCollection();
         $this->playlistSubscriptions = new ArrayCollection();
+        $this->watchHistories = new ArrayCollection();
     }
 
     public function getId(): int
@@ -197,18 +200,6 @@ class User
         return $this;
     }
 
-    public function getWatchHistory(): ?WatchHistory
-    {
-        return $this->watchHistory;
-    }
-
-    public function setWatchHistory(?WatchHistory $watchHistory): static
-    {
-        $this->watchHistory = $watchHistory;
-
-        return $this;
-    }
-
     public function getPlaylistSubscription(): ?PlaylistSubscription
     {
         return $this->playlistSubscription;
@@ -275,6 +266,36 @@ class User
             // set the owning side to null (unless already changed)
             if ($playlistSubscription->getSubscriber() === $this) {
                 $playlistSubscription->setSubscriber(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WatchHistory>
+     */
+    public function getWatchHistories(): Collection
+    {
+        return $this->watchHistories;
+    }
+
+    public function addWatchHistory(WatchHistory $watchHistory): static
+    {
+        if (!$this->watchHistories->contains($watchHistory)) {
+            $this->watchHistories->add($watchHistory);
+            $watchHistory->setWatcher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWatchHistory(WatchHistory $watchHistory): static
+    {
+        if ($this->watchHistories->removeElement($watchHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($watchHistory->getWatcher() === $this) {
+                $watchHistory->setWatcher(null);
             }
         }
 

@@ -37,7 +37,7 @@ class AppFixtures extends Fixture
     public const MAX_SUBSCRIPTIONS_HISTORY_PER_USER = 3;
     public const MAX_COMMENTS_PER_MEDIA = 10;
     public const MAX_PLAYLIST_SUBSCRIPTION_PER_USERS = 3;
-    public const MAX_WATCH_HISTORY_MEDIA_PER_USERS = 10;
+    public const MAX_WATCH_HISTORY_MEDIA_PER_USERS = 5;
 
     public function load(ObjectManager $manager): void
     {
@@ -355,30 +355,12 @@ class AppFixtures extends Fixture
                 $watchHistory = new WatchHistory();
                 $watchHistory->setLastWatched(new \DateTimeImmutable('now'));
                 $watchHistory->setNumberOfViews(random_int(1, 100));
+                $watchHistory->setWatcher($user);
 
-                $user->setWatchHistory($watchHistory);
-                $manager->persist($watchHistory);
-
-                $associatedMedias = [];
-                $numberOfMedias = max(random_int(1, 5), 1); // Toujours au moins un média
-
-                for ($i = 0; $i < $numberOfMedias; $i++) {
-                    $randomMedia = $medias[array_rand($medias)];
-                    
-                    // Éviter les doublons dans les médias associés
-                    if (!in_array($randomMedia, $associatedMedias, true)) {
-                        $associatedMedias[] = $randomMedia;
-                        $watchHistory->addMedium($randomMedia);
-                    }
-                }
-
-                // Vérifiez qu'au moins un média est associé (au cas où la boucle serait mal exécutée)
-                if (count($associatedMedias) === 0) {
-                    $randomMedia = $medias[array_rand($medias)];
-                    $watchHistory->addMedium($randomMedia);
-                }
-
-                $watchHistory->addAuthor($user);
+                $randomMedia = $medias[array_rand($medias)];
+                $watchHistory->setMedia($randomMedia);
+                
+                $manager->persist(object: $watchHistory);
             }
         }
     }

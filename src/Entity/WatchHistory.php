@@ -22,23 +22,13 @@ class WatchHistory
     #[ORM\Column]
     private int $numberOfViews;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'watchHistory')]
-    private Collection $author;
+    #[ORM\ManyToOne(inversedBy: 'watchHistories')]
+    #[ORM\JoinColumn(nullable: false)]
+    private User $watcher;
 
-    /**
-     * @var Collection<int, Media>
-     */
-    #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'watchHistory')]
-    private Collection $media;
-
-    public function __construct()
-    {
-        $this->author = new ArrayCollection();
-        $this->media = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'watchHistories')]
+    #[ORM\JoinColumn(nullable: false)]
+    private Media $media;
 
     public function getId(): int
     {
@@ -69,62 +59,26 @@ class WatchHistory
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getAuthor(): Collection
+    public function getWatcher(): User
     {
-        return $this->author;
+        return $this->watcher;
     }
 
-    public function addAuthor(User $author): static
+    public function setWatcher(User $watcher): static
     {
-        if (!$this->author->contains($author)) {
-            $this->author->add($author);
-            $author->setWatchHistory($this);
-        }
+        $this->watcher = $watcher;
 
         return $this;
     }
 
-    public function removeAuthor(User $author): static
-    {
-        if ($this->author->removeElement($author)) {
-            // set the owning side to null (unless already changed)
-            if ($author->getWatchHistory() === $this) {
-                $author->setWatchHistory(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Media>
-     */
-    public function getMedia(): Collection
+    public function getMedia(): Media
     {
         return $this->media;
     }
 
-    public function addMedium(Media $medium): static
+    public function setMedia(Media $media): static
     {
-        if (!$this->media->contains($medium)) {
-            $this->media->add($medium);
-            $medium->setWatchHistory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMedium(Media $medium): static
-    {
-        if ($this->media->removeElement($medium)) {
-            // set the owning side to null (unless already changed)
-            if ($medium->getWatchHistory() === $this) {
-                $medium->setWatchHistory(null);
-            }
-        }
+        $this->media = $media;
 
         return $this;
     }
