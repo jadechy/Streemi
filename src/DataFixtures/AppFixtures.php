@@ -338,9 +338,10 @@ class AppFixtures extends Fixture
         /** @var User $user */
         foreach ($users as $user) {
             for ($i = 0; $i < random_int(0, self::MAX_PLAYLIST_SUBSCRIPTION_PER_USERS); $i++) {
+                $playlist = $playlists[array_rand($playlists)];
                 $subscription = new PlaylistSubscription();
                 $subscription->setSubscriber($user);
-                $subscription->setPlaylist($playlists[array_rand($playlists)]);
+                $subscription->setPlaylist($playlist);
                 $subscription->setSubscribedAt(new \DateTimeImmutable('now'));
                 $manager->persist($subscription);
             }

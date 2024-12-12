@@ -25,10 +25,6 @@ class Playlist
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private \DateTimeInterface $updatedAt;
 
-    #[ORM\ManyToOne(inversedBy: 'playlist')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?PlaylistSubscription $playlistSubscription = null;
-
     #[ORM\ManyToOne(inversedBy: 'playlists')]
     private ?User $creator = null;
 
@@ -87,18 +83,6 @@ class Playlist
     public function setUpdatedAt(\DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getPlaylistSubscription(): ?PlaylistSubscription
-    {
-        return $this->playlistSubscription;
-    }
-
-    public function setPlaylistSubscription(?PlaylistSubscription $playlistSubscription): static
-    {
-        $this->playlistSubscription = $playlistSubscription;
 
         return $this;
     }

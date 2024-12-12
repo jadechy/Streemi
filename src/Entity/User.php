@@ -32,7 +32,7 @@ class User
     /**
      * @var Collection<int, SubscriptionHistory>
      */
-    #[ORM\OneToMany(targetEntity: SubscriptionHistory::class, mappedBy: 'author')]
+    #[ORM\OneToMany(targetEntity: SubscriptionHistory::class, mappedBy: 'subscriber')]
     private Collection $subscriptionHistories;
 
     #[ORM\Column(enumType: UserAccountStatusEnum::class)]
@@ -44,10 +44,6 @@ class User
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'author')]
     private Collection $comments;
 
-    #[ORM\ManyToOne(inversedBy: 'author')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?PlaylistSubscription $playlistSubscription = null;
-
     /**
      * @var Collection<int, Playlist>
      */
@@ -57,7 +53,7 @@ class User
     /**
      * @var Collection<int, PlaylistSubscription>
      */
-    #[ORM\OneToMany(targetEntity: PlaylistSubscription::class, mappedBy: 'suscriber')]
+    #[ORM\OneToMany(targetEntity: PlaylistSubscription::class, mappedBy: 'subscriber')]
     private Collection $playlistSubscriptions;
 
     /**
