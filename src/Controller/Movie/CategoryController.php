@@ -50,12 +50,10 @@ class CategoryController extends AbstractController
 
         $categories = $categoryRepository->findAll();
 
+        $categoryName = $category->getName();
+
         if($media){
-            if($media == 'serie'){
-                $mediasTendance = $doctrine->getRepository(Media::class)->findMostPopularMediasByType('serie');
-            }else if($media == 'movie'){
-                $mediasTendance = $doctrine->getRepository(Media::class)->findMostPopularMediasByType('movie');
-            }
+            $mediasTendance = $doctrine->getRepository(Media::class)->findMostPopularMediasByTypeAndCategory($media,$categoryName);
             return $this->render('category/category.html.twig',[
                 'categoryChose' => $category,
                 'categories' => $categories,
@@ -63,7 +61,7 @@ class CategoryController extends AbstractController
                 'mediasTendance' => $mediasTendance
             ]);
         }else{
-            $mediasTendance = $doctrine->getRepository(Media::class)->findMostPopularMediasByType('movie');
+            $mediasTendance = $doctrine->getRepository(Media::class)->findMostPopularMediasByTypeAndCategory('movie',$categoryName);
 
             return $this->render('category/category.html.twig',[
                 'categoryChose' => $category,

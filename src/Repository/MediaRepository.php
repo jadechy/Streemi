@@ -56,6 +56,36 @@ class MediaRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+        /**
+     * @param string $mediaType Le type de média : 'movie' ou 'serie'
+     * @param int $limit Le nombre de résultats (par défaut 3)
+     * @return Media[] Returns an array of Media objects
+     */
+    public function findMostPopularMediasByTypeAndCategory(string $mediaType, string $category, int $limit = 3): array
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->leftJoin('m.watchHistories', 'wh') 
+            ->leftJoin('m.categories', 'c')
+
+            ->addSelect('COUNT(wh.id) AS HIDDEN watchCount') 
+            ->groupBy('m.id')
+            ->orderBy('watchCount', 'DESC') 
+
+            ->andWhere('c.name = :category')
+            ->setParameter('category', $category)
+
+            ->setMaxResults($limit); 
+        
+        // Filtrer selon le type de média
+        if ($mediaType === 'movie') {
+            $qb->andWhere('m INSTANCE OF App\Entity\Movie'); 
+        } elseif ($mediaType === 'serie') {
+            $qb->andWhere('m INSTANCE OF App\Entity\Serie');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return Media[] Returns an array of Media objects
     //     */
