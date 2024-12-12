@@ -54,12 +54,12 @@
                         {% set index = 0 %}
 
                         {% for cle, playlist in playlists %}
-                            <option value="{{ playlist.id }}" {{playlistChose.id == playlist.id ? 'selected=\'True\'':''}}>#{{ index + 1 }} - {{ playlist.name }} - ({{ playlist.getAllMovieMedia() | length }} films & {{ playlist.getAllSerieMedia() | length }} séries)</option>
+                            <option value="{{ playlist.id }}" {{playlistChose is not null and playlistChose.id == playlist.id ? 'selected=\'True\'':''}}>#{{ index + 1 }} - {{ playlist.name }} - ({{ playlist.getAllMovieMedia() | length }} films & {{ playlist.getAllSerieMedia() | length }} séries)</option>
                             {% set index = index + 1 %}
                         {% endfor %}
 
                         {% for cle, playlistSubscription in playlistsSubscriptions %}
-                            <option value="{{ playlistSubscription.playlist.id }}" {{playlistChose.id == playlistSubscription.playlist.id ? 'selected=\'True\'':''}}>#{{ index + 1 }} - {{ playlistSubscription.playlist.name }} - ({{ playlistSubscription.playlist.getAllMovieMedia() | length }} films & {{ playlistSubscription.playlist.getAllSerieMedia() | length }} séries) - Liste de {{ playlistSubscription.subscriber.username }}</option>
+                            <option value="{{ playlistSubscription.playlist.id }}" {{playlistChose is not null and playlistChose.id == playlistSubscription.playlist.id ? 'selected=\'True\'':''}}>#{{ index + 1 }} - {{ playlistSubscription.playlist.name }} - ({{ playlistSubscription.playlist.getAllMovieMedia() | length }} films & {{ playlistSubscription.playlist.getAllSerieMedia() | length }} séries) - Liste de {{ playlistSubscription.subscriber.username }}</option>
                             {% set index = index + 1 %}
                         {% endfor %}
                     </select>

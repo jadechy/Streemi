@@ -9,12 +9,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AuthController extends AbstractController
 {
-    #[Route('/login', name: 'login')]
-    public function login(): Response
-    {
-        return $this->render('auth/login.html.twig');
-    }
-
     #[Route('/register', name: 'register')]
     public function register(): Response
     {
@@ -25,14 +19,6 @@ class AuthController extends AbstractController
     public function forgot(): Response
     {
         return $this->render('auth/forgot.html.twig');
-    }
-
-    #[Route('/logout', name: 'logout')]
-    public function logout(): Response
-    {
-        $url = $this->generateUrl('homepage');
-
-        return new RedirectResponse($url);
     }
 
     #[Route('/confirm', name: 'confirm')]

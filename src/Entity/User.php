@@ -7,9 +7,11 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,6 +23,9 @@ class User
 
     #[ORM\Column(length: 255)]
     private string $email;
+
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
 
     #[ORM\Column(length: 255)]
     private string $password;
@@ -100,6 +105,46 @@ class User
         return $this;
     }
 
+        /**
+     * The public representation of the user (e.g. a username, an email address, etc.)
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     * @return array<string>
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+
+    }
+
+    /**
+     * @return string the hashed password for this user
+     */
     public function getPassword(): string
     {
         return $this->password;
@@ -192,18 +237,6 @@ class User
                 $comment->setAuthor(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getPlaylistSubscription(): ?PlaylistSubscription
-    {
-        return $this->playlistSubscription;
-    }
-
-    public function setPlaylistSubscription(?PlaylistSubscription $playlistSubscription): static
-    {
-        $this->playlistSubscription = $playlistSubscription;
 
         return $this;
     }

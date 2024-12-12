@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 
+use App\Entity\User;
 use App\Entity\Playlist;
 use App\Entity\PlaylistSubscription;
 
@@ -24,9 +25,12 @@ class ListController extends AbstractController
             $playlistChose = null;
         }
 
-        $playlists = $doctrine->getRepository(Playlist::class)->findAll();
+        /** @var User $user */
+        $user = $this->getUser();
 
-        $playlistsSubscriptions = $doctrine->getRepository(PlaylistSubscription::class)->findAll();
+        $playlists = $user->getPlaylists();
+
+        $playlistsSubscriptions = $user->getPlaylistSubscriptions();
 
         return $this->render('list/lists.html.twig', [
             'playlistChose' => $playlistChose,
