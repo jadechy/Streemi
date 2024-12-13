@@ -21,23 +21,26 @@
         </header>
 
         <section>
-            <h1 class="text-lg font-medium text-black">Catéguorie <span class="font-bold text-red-600">{{ category.label }}</span></h1>
-            <table class="table">
-                <tbody class="min-w-full table-auto border-collapse mt-4">
-                    <tr class="hover:bg-gray-100">
-                        <th class="px-4 py-2 border-b">Id</th>
-                        <td class="px-4 py-2 border-b">{{ category.id }}</td>
-                    </tr>
-                    <tr class="hover:bg-gray-100">
-                        <th class="px-4 py-2 border-b">Name</th>
-                        <td class="px-4 py-2 border-b">{{ category.name }}</td>
-                    </tr>
-                    <tr class="hover:bg-gray-100">
-                        <th class="px-4 py-2 border-b">Label</th>
-                        <td class="px-4 py-2 border-b">{{ category.label }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h1 class="text-lg font-medium text-black">Catégorie <span class="font-bold text-red-600">{{ category.label }}</span></h1>
+
+            <div class="overflow-hidden  border rounded-lg border-gray-300 mt-9">
+                <table class="table-auto min-w-full rounded-xl">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th scope="col" class="p-5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"> ID</th>
+                            <th scope="col" class="p-5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"> Nom</th>
+                            <th scope="col" class="p-5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"> Label</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-300 ">
+                        <tr class="bg-white transition-all duration-500 hover:bg-gray-50">
+                            <td class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">{{ category.id }}</td>
+                            <td class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">{{ category.name }}</td>
+                            <td class="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">{{ category.label }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div>
                 <h2 class="text-lg font-medium text-black mt-4">Les <span class="font-bold text-red-600">films</span></h2>
@@ -90,7 +93,5 @@
             </div>
         </section>
     </main>
-    {% include 'right-sidebar.html.twig' %}
-
 </div>
 {% endblock %}
