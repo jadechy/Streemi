@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+use App\Entity\Category;
+use App\Repository\CategoryRepository;
+
 #[Route('/admin')]
 #[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
@@ -33,5 +36,13 @@ class AdminController extends AbstractController
     public function adminAddMovies(): Response
     {
         return $this->render('admin/admin_add_films.html.twig');
+    }
+
+    #[Route('/category', name: 'admin_category')]
+    public function adminCatgories(CategoryRepository $categoryRepository): Response
+    {
+        return $this->render('category/index.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+        ]);
     }
 }

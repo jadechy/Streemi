@@ -1,0 +1,40 @@
+
+<li class="relative flex flex-row rounded-xl overflow-hidden border hover:scale-105 transition cursor-pointer hover:opacity-90 hover:shadow-lg">
+    <a href="{{ path(mediaCategory.isMovie() ? 'show_movie' : 'show_serie', { id: mediaCategory.id }) }}">
+        <!-- Image à gauche -->
+        <img src="https://fr.web.img6.acsta.net/c_310_420/pictures/22/03/16/15/20/0170262.jpg" class="h-38 w-22 object-cover" alt="">
+
+        <!-- Contenu à droite -->
+        <div class="w-full bg-white px-3 py-2 flex flex-col justify-between">
+            <!-- Titre et description -->
+            <div>
+                <span class="capitalize font-medium text-lg">{{ mediaCategory.title }}</span>
+                <span class="opacity-40 text-xs">(2022)</span>
+            </div>
+            
+            <!-- Évaluation ou autres informations -->
+            <div class="flex items-center justify-between mt-2">
+                <div class="flex items-center space-x-2 text-xs">
+                    <svg class="w-8 h-5" xmlns="http://www.w3.org/2000/svg" width="64" height="32" viewBox="0 0 64 32" version="1.1">
+                        <g fill="#F5C518">
+                            <rect x="0" y="0" width="100%" height="100%" rx="4"></rect>
+                        </g>
+                        <g transform="translate(8.000000, 7.000000)" fill="#000000" fill-rule="nonzero">
+                            <polygon points="0 18 5 18 5 0 0 0"></polygon>
+                            <path d="M15.6725178,0 L14.5534833,8.40846934 L13.8582008,3.83502426 C13.65661,2.37009263 13.4632474,1.09175121 13.278113,0 L7,0 L7,18 L11.2416347,18"></path>
+                        </g>
+                    </svg>
+                    <span>7.4</span>
+                </div>
+
+                <!-- Bouton d'action -->
+                <a href="#" class="p-2.5 bg-gray-800/90 rounded-lg text-white hover:bg-red-600/80 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </a>
+</li>
+
