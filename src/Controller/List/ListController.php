@@ -7,11 +7,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 use App\Entity\User;
 use App\Entity\Playlist;
 use App\Entity\PlaylistSubscription;
 
+#[IsGranted('ROLE_USER')]
 class ListController extends AbstractController
 {
     #[Route('/list', name: 'list')]
